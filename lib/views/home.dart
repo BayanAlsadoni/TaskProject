@@ -1,3 +1,5 @@
+import 'package:final_project/views/app_pages/desplay_tasks.dart';
+import 'package:final_project/views/app_pages/profile.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
@@ -5,8 +7,16 @@ import '../data/my_colors.dart';
 import '../widgets/category_dialog.dart';
 import '../widgets/drawer_home.dart';
 import '../widgets/itemes_widget.dart';
+import 'app_pages/categoryPage.dart';
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
+  @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  PageController pageController = PageController();
+  int index = 0;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -14,47 +24,36 @@ class HomePage extends StatelessWidget {
       appBar: AppBar(
         title: Text("home"),
       ),
-      body: SingleChildScrollView(
-        child: Container(
-          padding: EdgeInsets.all(10),
-          child: Expanded(
-            child: Column(
-              // mainAxisAlignment: MainAxisAlignment.end,
-              crossAxisAlignment: CrossAxisAlignment.end,
-              children: [
-                // Expanded(
-                //     child:
-                ItemesWidget(
-                    "assets/images/image_welcome_3.png", "t", "d"), //),
-
-                SizedBox(
-                  height: 50,
-                ),
-                FloatingActionButton(
-                    onPressed: () {
-                      showDialog(
-                          context: context,
-                          builder: (BuildContext context) => CategoryDialog());
-                    },
-                    backgroundColor: MyColors.purple,
-                    child: Icon(Icons.add)),
-                // Text("data"),
-              ],
-            ),
-          ),
-        ),
+      body: PageView(
+        controller: pageController,
+        onPageChanged: (value) {
+          index = value;
+          setState(() {});
+        },
+        children: [
+          CategoryPage(),
+          DesplayTasks(),
+          Profile(),
+        ],
       ),
-      bottomNavigationBar: BottomNavigationBar(items: [
-        BottomNavigationBarItem(icon: Icon(Icons.home), label: "home"),
-        BottomNavigationBarItem(
-            // icon: Icon(Icons.assessment_outlined), label: "task"),
-            icon: Icon(Icons.ballot_outlined),
-            // icon: Icon(Icons.auto_stories_outlined),
-            label: "task"),
-        BottomNavigationBarItem(
-            icon: Icon(Icons.account_circle), label: "profile"),
-        // BottomNavigationBarItem(icon: Icon(Icons.home)),
-      ]),
+      bottomNavigationBar: BottomNavigationBar(
+          currentIndex: index,
+          onTap: (value) {
+            index = value;
+            pageController.jumpToPage(index);
+            setState(() {});
+          },
+          items: [
+            BottomNavigationBarItem(icon: Icon(Icons.home), label: "home"),
+            BottomNavigationBarItem(
+                // icon: Icon(Icons.assessment_outlined), label: "task"),
+                icon: Icon(Icons.ballot_outlined),
+                // icon: Icon(Icons.auto_stories_outlined),
+                label: "task"),
+            BottomNavigationBarItem(
+                icon: Icon(Icons.account_circle), label: "profile"),
+            // BottomNavigationBarItem(icon: Icon(Icons.home)),
+          ]),
     );
   }
 }

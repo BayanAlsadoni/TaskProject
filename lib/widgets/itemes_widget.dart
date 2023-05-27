@@ -10,28 +10,44 @@ class ItemesWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return
-        // Expanded(
-        //   child:
-        GridView.builder(
-            physics: NeverScrollableScrollPhysics(),
-            shrinkWrap: true,
-            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 2,
-              mainAxisSpacing: 7,
-              crossAxisSpacing: 7,
-              // childAspectRatio: 10
-              // mainAxisExtent: 25
-            ),
-            itemCount: 3,
-            itemBuilder: (context, index) {
-              return Container(
-                decoration: BoxDecoration(
-                    color: MyColors.blue_purple,
-                    borderRadius: BorderRadius.circular(10)),
-              );
-            }
-            // ),
-            );
+    return ListView.builder(
+      itemCount: 3,
+      itemBuilder: (context, index) {
+        return Container(
+          color: Colors.blueGrey,
+          width: double.infinity,
+          height: double.infinity,
+          child: Row(
+            children: [
+              Expanded(child: ListTile()),
+              Expanded(child: ListTile()),
+            ],
+          ),
+        );
+      },
+    );
+
+    // Expanded(
+    //   child:
+    // GridView.builder(
+    //     physics: NeverScrollableScrollPhysics(),
+    //     shrinkWrap: true,
+    //     gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+    //       crossAxisCount: 2,
+    //       mainAxisSpacing: 7,
+    //       crossAxisSpacing: 7,
+    //       // childAspectRatio: 10
+    //       // mainAxisExtent: 25
+    //     ),
+    //     itemCount: 3,
+    //     itemBuilder: (context, index) {
+    //       return Container(
+    //         decoration: BoxDecoration(
+    //             color: MyColors.blue_purple,
+    //             borderRadius: BorderRadius.circular(10)),
+    //       );
+    //     }
+    //     // ),
+    //     );
   }
 }

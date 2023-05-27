@@ -1,8 +1,21 @@
+import 'package:final_project/data/color_name.dart';
 import 'package:final_project/data/my_colors.dart';
+import 'package:final_project/models/db_helper.dart';
 import 'package:final_project/widgets/radio_dialog.dart';
 import 'package:flutter/material.dart';
 
-class CategoryDialog extends StatelessWidget {
+import '../data/category.dart';
+
+class CategoryDialog extends StatefulWidget {
+  @override
+  State<CategoryDialog> createState() => _CategoryDialogState();
+}
+
+class _CategoryDialogState extends State<CategoryDialog> {
+  TextEditingController controller = TextEditingController();
+
+  String color = "";
+
   @override
   Widget build(BuildContext context) {
     return Dialog(
@@ -19,6 +32,7 @@ class CategoryDialog extends StatelessWidget {
                 padding: EdgeInsets.fromLTRB(10, 15, 10, 5),
                 height: 60,
                 child: TextField(
+                  controller: controller,
                   decoration: InputDecoration(
                       label: Text("Category"),
                       border: OutlineInputBorder(
@@ -30,22 +44,22 @@ class CategoryDialog extends StatelessWidget {
                 Container(
                   margin: EdgeInsets.fromLTRB(10, 0, 10, 0),
                   child: Row(children: [
-                    RadioDialog("v", "g", "yellow", Colors.amber),
-                    RadioDialog("v", "g", "brown", Colors.brown),
+                    RadioDialog("yellow", color, "yellow", Colors.amber),
+                    RadioDialog("brown", color, "brown", Colors.brown),
                   ]),
                 ),
                 Container(
                   margin: EdgeInsets.fromLTRB(10, 0, 10, 0),
                   child: Row(children: [
-                    RadioDialog("v", "g", "red", Colors.red),
-                    RadioDialog("v", "g", "orange", Colors.orange),
+                    RadioDialog("red", color, "red", Colors.red),
+                    RadioDialog("orange", color, "orange", Colors.orange),
                   ]),
                 ),
                 Container(
                   margin: EdgeInsets.fromLTRB(10, 0, 10, 0),
                   child: Row(children: [
-                    RadioDialog("v", "g", "green", Colors.green),
-                    RadioDialog("v", "g", "blue", Colors.blue),
+                    RadioDialog("green", color, "green", Colors.green),
+                    RadioDialog("blue", color, "blue", Colors.blue),
                   ]),
                 ),
               ],
@@ -53,6 +67,10 @@ class CategoryDialog extends StatelessWidget {
             // Container(padding: EdgeInsets.only(top: 20.0)),
             TextButton(
                 onPressed: () {
+                  String catName = controller.text;
+                  // ColorName.convertColor(color); // importany
+                  Category c = Category(name: catName, color: color);
+                  DBHelper.dbHelper.insertCategory(c);
                   Navigator.of(context).pop();
                 },
                 child: Text(

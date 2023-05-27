@@ -1,9 +1,42 @@
+import 'package:final_project/views/registration/signup.dart';
+import 'package:final_project/views/welcom_pages/welcomePage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import 'data/my_colors.dart';
+import 'models/sp_helper.dart';
 
-class Splash extends StatelessWidget {
+class Splash extends StatefulWidget {
+  @override
+  State<Splash> createState() => _SplashState();
+}
+
+class _SplashState extends State<Splash> {
+  navigationFun(BuildContext context) async {
+    await Future.delayed(Duration(seconds: 3));
+    bool result = SpHelper.checkFirstTime();
+    if (result) {
+      // navigate to new user
+      Navigator.of(context)
+          .pushReplacement(MaterialPageRoute(builder: (context) {
+        return WelcomePage();
+      }));
+    } else {
+      //navigate to old user
+      Navigator.of(context)
+          .pushReplacement(MaterialPageRoute(builder: (context) {
+        return Register();
+      }));
+    }
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    navigationFun(context);
+  }
+
   @override
   Widget build(BuildContext context) {
     // return Scaffold(

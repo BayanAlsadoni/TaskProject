@@ -4,13 +4,15 @@ import '../data/my_colors.dart';
 
 class MyButtonStyle extends StatelessWidget {
   String btnText;
-  MyButtonStyle(this.btnText);
+  Widget onpressed;
+  MyButtonStyle(this.btnText, this.onpressed);
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(
         style: ElevatedButton.styleFrom(
             fixedSize: Size(double.infinity, 40),
-            backgroundColor: MyColors.purple2,
+            // backgroundColor: MyColors.purple2,
+            backgroundColor: MyColors.purple,
             padding: EdgeInsets.all(5),
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(18.0),
@@ -22,7 +24,11 @@ class MyButtonStyle extends StatelessWidget {
             //             borderRadius: BorderRadius.circular(18.0),
             //             side: BorderSide(color: MyColors.broun)))
             ),
-        onPressed: () {},
+        onPressed: () {
+          Navigator.of(context).push(MaterialPageRoute(builder: (context) {
+            return onpressed;
+          }));
+        },
         child: Text(
           btnText,
           // style: TextStyle(

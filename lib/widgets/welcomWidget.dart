@@ -1,15 +1,26 @@
+import 'package:final_project/data/my_colors.dart';
 import 'package:flutter/material.dart';
 
 import 'button_style.dart';
 
-class WeclcomWidget extends StatelessWidget {
+class WeclcomWidget extends StatefulWidget {
   String title = "";
   String discription = "";
   String image = "";
-  WeclcomWidget(this.image, this.title, this.discription);
+  Widget a;
+
+  WeclcomWidget(this.image, this.title, this.discription, this.a);
 
   @override
+  State<WeclcomWidget> createState() => _WeclcomWidgetState();
+}
+
+class _WeclcomWidgetState extends State<WeclcomWidget> {
+  @override
   Widget build(BuildContext context) {
+    // dynamic fun;
+    // var fun;
+    var fun;
     return Container(
       padding: EdgeInsets.all(10),
       margin: EdgeInsets.all(10),
@@ -17,7 +28,7 @@ class WeclcomWidget extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Image.asset(
-            image,
+            widget.image,
             width: double.infinity,
             // height: 200,
           ),
@@ -25,7 +36,7 @@ class WeclcomWidget extends StatelessWidget {
             height: 30,
           ),
           Text(
-            title,
+            widget.title,
             style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
             textAlign: TextAlign.center,
           ),
@@ -33,7 +44,7 @@ class WeclcomWidget extends StatelessWidget {
             height: 20,
           ),
           Text(
-            discription,
+            widget.discription,
             style: TextStyle(
               fontSize: 15,
               color: Colors.grey,
@@ -45,7 +56,18 @@ class WeclcomWidget extends StatelessWidget {
           //   height: 180,
           // ),
           // MyButtonStyle("continue"),
-          // TextButton(onPressed: () {}, child: Text("Skip"))
+          // FloatingActionButton(
+          //   onPressed: () {
+          //     Navigator.of(context)
+          //         .pushReplacement(MaterialPageRoute(builder: (context) {
+          //       return widget.a;
+          //     }));
+          //     setState(() {});
+          //     print("go btn");
+          //   },
+          //   child: Icon(Icons.navigate_next),
+          //   backgroundColor: MyColors.purple,
+          // )
         ],
       ),
     );

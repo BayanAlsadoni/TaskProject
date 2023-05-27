@@ -1,10 +1,23 @@
 import 'package:final_project/data/my_colors.dart';
+import 'package:final_project/views/home.dart';
 import 'package:flutter/material.dart';
 
 import '../widgets/button_style.dart';
 import '../widgets/text_field_style.dart';
 
-class AddTask extends StatelessWidget {
+class AddTask extends StatefulWidget {
+  int catId;
+  AddTask(this.catId);
+  @override
+  State<AddTask> createState() => _AddTaskState();
+}
+
+class _AddTaskState extends State<AddTask> {
+  TextEditingController titleEditingController = TextEditingController();
+  TextEditingController descriptionEditingController = TextEditingController();
+
+  TimeOfDay selectedTime = TimeOfDay.now();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -28,11 +41,13 @@ class AddTask extends StatelessWidget {
               ),
               Text("Title"),
               MyTextFieldStyle(
+                  textEditingController: titleEditingController,
                   hintText: "Task title",
                   fillColor: Colors.black12 //MyColors.purple4,
                   ),
               Text("Description"),
               MyTextFieldStyle(
+                  textEditingController: descriptionEditingController,
                   hintText: "Enter task description",
                   minLines: 5,
                   fillColor: Colors.black12
@@ -71,6 +86,7 @@ class AddTask extends StatelessWidget {
                             builder: (context) {
                               return TimePickerDialog(
                                   initialTime: TimeOfDay(hour: 4, minute: 2));
+                              // initialTime: selectedTime);
                             });
                       },
                       title: Text("choos Time",
@@ -119,11 +135,16 @@ class AddTask extends StatelessWidget {
               //     child: MyButtonStyle("Done")),
               Container(
                 width: double.infinity,
-                child: ElevatedButton(
+                child:
+                    //  MyButtonStyle("Done", HomePage())
+                    ElevatedButton(
                   style: ButtonStyle(
                     backgroundColor: MaterialStatePropertyAll(MyColors.purple),
                   ),
-                  onPressed: () {},
+                  onPressed: () {
+                    String title = titleEditingController.text;
+                    String description = descriptionEditingController.text;
+                  },
                   child: Text(
                     "Done",
                     style: TextStyle(

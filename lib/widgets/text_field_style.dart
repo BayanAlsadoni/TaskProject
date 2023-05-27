@@ -6,7 +6,12 @@ class MyTextFieldStyle extends StatelessWidget {
   String? hintText;
   Color? fillColor;
   int? minLines;
-  MyTextFieldStyle({this.hintText, this.minLines, this.fillColor});
+  TextEditingController? textEditingController;
+  MyTextFieldStyle(
+      {this.hintText,
+      this.minLines,
+      this.fillColor,
+      this.textEditingController});
 
   //  = fillColor==null?MyColors.white_gray ;fillColor
 
@@ -30,12 +35,12 @@ class MyTextFieldStyle extends StatelessWidget {
           hintText: hintText,
           hintStyle: TextStyle(color: Colors.black26),
           contentPadding: EdgeInsets.all(10),
-          filled: true,
-          fillColor: fillColor ?? MyColors.white_gray,
+          // filled: true,
+          // fillColor: fillColor ?? MyColors.white_gray,
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(10),
-            borderSide: BorderSide
-                .none, //if u don't want the border visible but the radius of of border can see it
+            // borderSide: BorderSide
+            //     .none, //if u don't want the border visible but the radius of of border can see it
           ),
 
           // labelText: "email"

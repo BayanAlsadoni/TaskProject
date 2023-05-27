@@ -1,5 +1,6 @@
 import 'dart:ui';
 
+import 'package:final_project/views/home.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -54,7 +55,7 @@ class Login extends StatelessWidget {
                 width: double.infinity,
                 height: 70,
               ),
-              MyButtonStyle("Login"),
+              MyButtonStyle("Login", HomePage()),
               SizedBox(
                 width: double.infinity,
                 height: 30,

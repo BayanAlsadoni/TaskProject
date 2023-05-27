@@ -1,3 +1,4 @@
+import 'package:final_project/views/home.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -5,7 +6,12 @@ import '../../data/my_colors.dart';
 import '../../widgets/button_style.dart';
 import '../../widgets/text_field_style.dart';
 
-class Register extends StatelessWidget {
+class Register extends StatefulWidget {
+  @override
+  State<Register> createState() => _RegisterState();
+}
+
+class _RegisterState extends State<Register> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -43,7 +49,7 @@ class Register extends StatelessWidget {
               MyTextFieldStyle(
                 hintText: "Enter your password",
               ),
-              MyButtonStyle("Register"),
+              MyButtonStyle("Register", HomePage()),
               // ElevatedButton(onPressed: () {}, child: Text("Reguster")),
               Row(
                 children: [
