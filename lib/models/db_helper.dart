@@ -3,6 +3,7 @@ import 'package:sqflite/sqflite.dart';
 
 import '../data/category.dart';
 import '../data/task.dart';
+import '../data/user.dart';
 
 class DBHelper {
   DBHelper._();
@@ -21,8 +22,20 @@ class DBHelper {
             'CREATE TABLE $category (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, color TEXT)');
         db.execute(
             'CREATE TABLE $task (id INTEGER PRIMARY KEY AUTOINCREMENT, title TEXT,description TEXT, time TEXT, date TEXT, catId INTEGER references Category(id) )');
+
+        db.execute(
+            'CREATE TABLE Register (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT,email TEXT, password TEXT');
       },
     );
+  }
+
+  insertUse(User user) async {
+    await databas.insert("Register", user.toMap());
+  }
+
+  Future<List<User>> getAllUsers() async {
+    List<Map> result = await databas.query("Register");
+    return result.map((e) => User.fromMap(e)).toList();
   }
 
   insertCategory(Category cat) async {
@@ -47,15 +60,19 @@ class DBHelper {
   //   databas.query(category, where: "id=$id");
   // }
 
-  insertTask(String title, String description, String time, String date,
-      int catId) async {
-    databas.insert(task, {
-      "title": title,
-      "description": description,
-      "time": time,
-      "date": date,
-      "catId": catId,
-    });
+  // insertTask(String title, String description, String time, String date,
+  //     int catId) async {
+  //   databas.insert(task, {
+  //     "title": title,
+  //     "description": description,
+  //     "time": time,
+  //     "date": date,
+  //     "catId": catId,
+  //   });
+  // }
+
+  insertTask(Task t) async {
+    databas.insert(task, t.toMap());
   }
 
   Future<List<Task>> getAllTasks() async {

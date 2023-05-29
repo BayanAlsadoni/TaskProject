@@ -45,7 +45,7 @@ class MyColors {
       case "yellow":
         return Colors.yellowAccent;
       default:
-        return Colors.blueGrey;
+        return MyColors.blue_purple;
     }
   }
 }

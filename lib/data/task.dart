@@ -5,7 +5,13 @@ class Task {
   String? time;
   String? date;
   int? catId;
-  Task({this.id, this.title, this.description});
+  Task(
+      {this.id,
+      this.title,
+      this.description,
+      this.catId,
+      this.date,
+      this.time});
   Task.fromMap(Map map) {
     id = map['id'];
     title = map['title'];

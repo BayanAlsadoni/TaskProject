@@ -1,8 +1,10 @@
 import 'package:final_project/data/color_name.dart';
 import 'package:final_project/data/my_colors.dart';
 import 'package:final_project/models/db_helper.dart';
+import 'package:final_project/models/provider.dart';
 import 'package:final_project/widgets/radio_dialog.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../data/category.dart';
 
@@ -18,74 +20,156 @@ class _CategoryDialogState extends State<CategoryDialog> {
 
   @override
   Widget build(BuildContext context) {
-    return Dialog(
-      shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(12.0)), //this right here
-      // insetPadding: EdgeInsets.fromLTRB(0, 10, 0, 5),
-      child: Container(
-        height: 350.0,
-        width: 300.0,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: <Widget>[
-            Container(
-                padding: EdgeInsets.fromLTRB(10, 15, 10, 5),
-                height: 60,
-                child: TextField(
-                  controller: controller,
-                  decoration: InputDecoration(
-                      label: Text("Category"),
-                      border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(15))),
-                )),
-            Text("Choos Color"),
-            Column(
-              children: [
-                Container(
-                  margin: EdgeInsets.fromLTRB(10, 0, 10, 0),
-                  child: Row(children: [
-                    RadioDialog("yellow", color, "yellow", Colors.amber),
-                    RadioDialog("brown", color, "brown", Colors.brown),
-                  ]),
-                ),
-                Container(
-                  margin: EdgeInsets.fromLTRB(10, 0, 10, 0),
-                  child: Row(children: [
-                    RadioDialog("red", color, "red", Colors.red),
-                    RadioDialog("orange", color, "orange", Colors.orange),
-                  ]),
-                ),
-                Container(
-                  margin: EdgeInsets.fromLTRB(10, 0, 10, 0),
-                  child: Row(children: [
-                    RadioDialog("green", color, "green", Colors.green),
-                    RadioDialog("blue", color, "blue", Colors.blue),
-                  ]),
-                ),
-              ],
-            ),
-            // Container(padding: EdgeInsets.only(top: 20.0)),
-            TextButton(
-                onPressed: () {
-                  String catName = controller.text;
-                  // ColorName.convertColor(color); // importany
-                  Category c = Category(name: catName, color: color);
-                  DBHelper.dbHelper.insertCategory(c);
-                  Navigator.of(context).pop();
-                },
-                child: Text(
-                  'Got It!',
-                  style: TextStyle(color: MyColors.purple, fontSize: 18.0),
-                ))
-          ],
+    return Consumer<MyProvider>(builder: (context, provider, w) {
+      return Dialog(
+        shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(12.0)), //this right here
+        // insetPadding: EdgeInsets.fromLTRB(0, 10, 0, 5),
+        child: Container(
+          height: 350.0,
+          width: 300.0,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: <Widget>[
+              Container(
+                  padding: EdgeInsets.fromLTRB(10, 15, 10, 5),
+                  height: 60,
+                  child: TextField(
+                    controller: provider.catNameController,
+                    decoration: InputDecoration(
+                        label: Text("Category"),
+                        border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(15))),
+                  )),
+              Text("Choos Color"),
+              Column(
+                children: [
+                  Container(
+                    margin: EdgeInsets.fromLTRB(10, 0, 10, 0),
+                    child: Row(children: [
+                      Radio(
+                          fillColor: MaterialStateColor.resolveWith(
+                              (states) => MyColors.purple2),
+                          value: "yellow",
+                          groupValue: color,
+                          onChanged: (v) {
+                            color = v ?? '';
+                            provider.changeCatColor(color);
+                            print("$color");
+                          }),
+                      Text('yellow'),
+                      Radio(
+                          fillColor: MaterialStateColor.resolveWith(
+                              (states) => MyColors.purple2),
+                          value: "brown",
+                          groupValue: color,
+                          onChanged: (v) {
+                            color = v ?? '';
+                            provider.changeCatColor(color);
+                            print("$color");
+                          }),
+                      Text('brown'),
+
+                      // RadioDialog(
+                      //     value: "yellow",
+                      //     groupValue: color,
+                      //     colorName: "yellow",
+                      //     colorDegree: Colors.amber),
+                      // RadioDialog(
+                      //     value: "brown",
+                      //     groupValue: color,
+                      //     colorName: "brown",
+                      //     colorDegree: Colors.brown),
+                    ]),
+                  ),
+                  Container(
+                    margin: EdgeInsets.fromLTRB(10, 0, 10, 0),
+                    child: Row(children: [
+                      Radio(
+                          fillColor: MaterialStateColor.resolveWith(
+                              (states) => MyColors.purple2),
+                          value: "red",
+                          groupValue: color,
+                          onChanged: (v) {
+                            color = v ?? '';
+                            provider.changeCatColor(color);
+                            print("$color");
+                          }),
+                      Text('red'),
+                      Radio(
+                          fillColor: MaterialStateColor.resolveWith(
+                              (states) => MyColors.purple2),
+                          value: "orange",
+                          groupValue: color,
+                          onChanged: (v) {
+                            color = v ?? '';
+                            provider.changeCatColor(color);
+                            print("$color");
+                          }),
+                      Text('orange'),
+
+                      // RadioDialog(value: "red", groupValue: color),
+                      // // RadioDialog("red", color, "red", Colors.red),
+                      // RadioDialog(value: "orange", groupValue: color),
+                      // RadioDialog("orange", color, "orange", Colors.orange),
+                    ]),
+                  ),
+                  Container(
+                    margin: EdgeInsets.fromLTRB(10, 0, 10, 0),
+                    child: Row(children: [
+                      Radio(
+                          fillColor: MaterialStateColor.resolveWith(
+                              (states) => MyColors.purple2),
+                          value: "green",
+                          groupValue: color,
+                          onChanged: (v) {
+                            color = v ?? '';
+                            provider.changeCatColor(color);
+                            print("$color");
+                          }),
+                      Text('green'),
+                      Radio(
+                          fillColor: MaterialStateColor.resolveWith(
+                              (states) => MyColors.purple2),
+                          value: "blue",
+                          groupValue: color,
+                          onChanged: (v) {
+                            color = v ?? '';
+                            provider.changeCatColor(color);
+                            print("$color");
+                          }),
+                      Text('blue'),
+
+                      // RadioDialog("green", color, "green", Colors.green),
+                      // RadioDialog("blue", color, "blue", Colors.blue),
+                    ]),
+                  ),
+                ],
+              ),
+              // Container(padding: EdgeInsets.only(top: 20.0)),
+              TextButton(
+                  onPressed: () async {
+                    await provider.insertNewCategory(context);
+                    setState(() {});
+
+                    // String catName = controller.text;
+                    // // ColorName.convertColor(color); // importany
+                    // Category c = Category(name: catName, color: color);
+                    // DBHelper.dbHelper.insertCategory(c);
+                    Navigator.of(context).pop();
+                    setState(() {});
+                  },
+                  child: Text(
+                    'Got It!',
+                    style: TextStyle(color: MyColors.purple, fontSize: 18.0),
+                  ))
+            ],
+          ),
         ),
-      ),
-    );
+      );
+    });
   }
 }
-
-
-
 
 // Container(
 //                   margin: EdgeInsets.fromLTRB(10, 0, 10, 0),

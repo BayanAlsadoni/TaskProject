@@ -1,9 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../../data/my_colors.dart';
 import '../../data/task.dart';
 import '../../models/db_helper.dart';
+import '../../models/provider.dart';
 
 class DesplayTasks extends StatefulWidget {
   @override
@@ -27,34 +29,47 @@ class _DesplayTasksState extends State<DesplayTasks> {
 
   @override
   Widget build(BuildContext context) {
-    return allTasks == null
-        ? const Center(child: CircularProgressIndicator())
-        : ListView.builder(
-            itemCount: allTasks?.length ?? 0,
-            itemBuilder: (context, index) {
-              Task task = allTasks![index];
-              return Container(
-                margin: EdgeInsets.all(5),
-                decoration: BoxDecoration(
-                    // color: MyColors.convertColor(catTask.color ?? ""),
-                    color: MyColors.purple4,
-                    borderRadius: BorderRadius.circular(15)),
-                child: Dismissible(
-                  key: ValueKey(task),
-                  onDismissed: DBHelper.dbHelper.deleteTask(task.id ?? 0),
-                  child: ListTile(
-                    title: Text(task.title ?? ""),
-                    subtitle: Text(task.description ?? ""),
-                    // onTap: () {
-                    //   Navigator.of(context)
-                    //       .push(MaterialPageRoute(builder: (context) {
-                    //     return DesplayCategoryTasks(category.id ?? 0);
-                    //   }));
-                    // },
-                  ),
+    return
+        //  allTasks == null
+        //     ? const Center(child: CircularProgressIndicator())
+        //     :
+        Consumer<MyProvider>(builder: (context, controller, w) {
+      print(" tasks lingthe${controller.tasks.length}");
+      // setState(() {});
+      return ListView.builder(
+          itemCount: controller.tasks.length,
+          // itemCount: allTasks?.length ?? 0,
+          itemBuilder: (context, index) {
+            // Task task = allTasks![index];
+            return Container(
+              margin: EdgeInsets.all(5),
+              decoration: BoxDecoration(
+                  // color: MyColors.convertColor(catTask.color ?? ""),
+                  color: MyColors.purple4,
+                  borderRadius: BorderRadius.circular(15)),
+              child: Dismissible(
+                key: ValueKey(controller.tasks[index]),
+                // key: ValueKey(task),
+                onDismissed: (direction) {
+                  // DBHelper.dbHelper.deleteTask(task.id ?? 0);
+                  controller.deleteTask(controller.tasks[index].id ?? 0);
+                  setState(() {});
+                },
+                child: ListTile(
+                  title: Text(controller.tasks[index].title ?? ""),
+                  // title: Text(task.title ?? ""),
+                  // subtitle: Text(task.description ?? ""),
+                  // onTap: () {
+                  //   Navigator.of(context)
+                  //       .push(MaterialPageRoute(builder: (context) {
+                  //     return DesplayCategoryTasks(category.id ?? 0);
+                  //   }));
+                  // },
                 ),
-              );
-            });
+              ),
+            );
+          });
+    });
   }
 }
 

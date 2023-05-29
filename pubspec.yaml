@@ -10,6 +10,7 @@ dependencies:
   flutter:
     sdk: flutter
   flutter_avif: ^1.1.0
+  provider: ^6.0.5
   shared_preferences: ^2.1.1
   sqflite: ^2.2.8+2
 

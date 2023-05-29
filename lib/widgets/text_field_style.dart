@@ -20,6 +20,7 @@ class MyTextFieldStyle extends StatelessWidget {
     return Container(
       margin: EdgeInsets.fromLTRB(0, 10, 0, 5),
       child: TextField(
+        controller: textEditingController,
         // cursorColor: MyColors.broun,
 
         // textAlign: ,

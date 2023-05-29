@@ -1,3 +1,6 @@
+// import 'dart:js';
+
+import 'package:final_project/models/provider.dart';
 import 'package:final_project/splash.dart';
 import 'package:final_project/views/addTask.dart';
 
@@ -9,6 +12,7 @@ import 'package:final_project/views/welcom_pages/welcomePage.dart';
 import 'package:final_project/views/welcom_pages/welcomePage4.dart';
 import 'package:final_project/widgets/date_dialog.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import 'models/db_helper.dart';
 import 'models/sp_helper.dart';
@@ -18,12 +22,15 @@ void main() async {
   await SpHelper.initSp();
   await DBHelper.dbHelper.initDB();
   // runApp(const MainApp());
-  runApp(MaterialApp(home: HomePage()
-      // Scaffold(
-      //   body: Splash(),
-      //   backgroundColor: Colors.white,
-      // ),
-      ));
+  runApp(ChangeNotifierProvider<MyProvider>(
+    create: (context) => MyProvider(),
+    child: MaterialApp(home: HomePage()),
+
+    // Scaffold(
+    //   body: Splash(),
+    //   backgroundColor: Colors.white,
+    // ),
+  ));
 }
 
 class MainApp extends StatelessWidget {
