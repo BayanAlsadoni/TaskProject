@@ -26,6 +26,14 @@ class MyProvider extends ChangeNotifier {
   TextEditingController userEmail = TextEditingController();
   TextEditingController userPassword = TextEditingController();
 
+  TextEditingController taskTitleController = TextEditingController();
+  TextEditingController taskDescriptionController = TextEditingController();
+  // TextEditingController taskNameController = TextEditingController();
+  String time = "";
+  String date = "";
+  int catId = 0;
+  int id = 0;
+
   getUsers() async {
     users = await DBHelper.dbHelper.getAllUsers();
     notifyListeners();
@@ -74,12 +82,13 @@ class MyProvider extends ChangeNotifier {
   insertNewCategory(BuildContext context) async {
     Category category =
         Category(name: catNameController.text, color: catColorName);
-    int newId = await DBHelper.dbHelper.insertCategory(category);
-    category.id = newId;
-    categories.add(category);
-    notifyListeners();
+    // int newId =
+    await DBHelper.dbHelper.insertCategory(category);
+    // category.id = newId;
+    // categories.add(category);
+    // notifyListeners();
     // Navigator.of(context).pop();
-    // getAllCategories();
+    getAllCategories();
   }
 
   deleteCategory(int id) async {
@@ -111,18 +120,12 @@ class MyProvider extends ChangeNotifier {
   }
 
   getAllTasks() async {
-    flipIsLoading();
+    // flipIsLoading();
     tasks = await DBHelper.dbHelper.getAllTasks();
-    flipIsLoading();
+    notifyListeners();
+    // flipIsLoading();
   }
 
-  TextEditingController taskTitleController = TextEditingController();
-  TextEditingController taskDescriptionController = TextEditingController();
-  // TextEditingController taskNameController = TextEditingController();
-  String time = "";
-  String date = "";
-  int catId = 0;
-  int id = 0;
   insertNewTask() async {
     Task task = Task(
         title: taskTitleController.text,
@@ -130,10 +133,11 @@ class MyProvider extends ChangeNotifier {
         date: date,
         time: time,
         catId: catId);
-    int newId = await DBHelper.dbHelper.insertTask(task);
-    task.id = newId;
-    tasks.add(task);
-    notifyListeners();
+    // int newId =
+    await DBHelper.dbHelper.insertTask(task);
+    // task.id = newId;
+    // tasks.add(task);
+    // notifyListeners();
     getAllTasks();
   }
 

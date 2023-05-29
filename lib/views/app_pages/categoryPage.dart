@@ -55,44 +55,72 @@ class _CategoryPageState extends State<CategoryPage> {
                 )
               : SingleChildScrollView(
                   child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       GridView.builder(
+                        padding: EdgeInsets.all(10),
                         itemCount: controller.categories?.length,
                         itemBuilder: (context, index) {
                           //
-                          return Container(
-                            margin: EdgeInsets.all(15),
-                            decoration: BoxDecoration(
-                                color: MyColors.convertColor(
-                                    controller.categories![index].color ?? ''),
-                                // color: MyColors.blue_purple,
-                                borderRadius: BorderRadius.circular(10)),
-                            child: ListTile(
-                              title: Text(
-                                  controller.categories?[index].name ?? ''),
-                              onTap: () {
-                                print(
-                                    "category send ${controller.categories![index].name}");
-                                // controller.navigateToCategoryTask(
-                                //     controller.categories![index], context);
-                                Navigator.of(context)
-                                    .push(MaterialPageRoute(builder: (context) {
-                                  return DesplayCategoryTasks(
-                                      controller.categories![index]);
-                                }));
-                                print(
-                                    "category send ${controller.categories![index].id}");
-                              },
-                            ),
-                          );
+
+                          return index == 0
+                              ? Container(
+                                  // alignment: Alignment.bottomLeft,
+                                  // margin: EdgeInsets.fromLTRB(10, 5, 5, 0),
+                                  decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(15),
+                                      color: MyColors.purple3),
+                                  // width:
+                                  //     MediaQuery.of(context).size.width / 2.2,
+                                  // height: 100,
+                                  child: TextButton(
+                                      child: Icon(
+                                        Icons.add,
+                                        color: MyColors.purple,
+                                      ),
+                                      onPressed: () {
+                                        showDialog(
+                                            context: context,
+                                            builder: (BuildContext context) =>
+                                                CategoryDialog());
+                                        setState(() {});
+                                      }),
+                                )
+                              : Container(
+                                  // margin: EdgeInsets.only(left: 10),
+                                  decoration: BoxDecoration(
+                                      color: MyColors.convertColor(
+                                          controller.categories![index].color ??
+                                              ''),
+                                      // color: MyColors.blue_purple,
+                                      borderRadius: BorderRadius.circular(10)),
+                                  child: ListTile(
+                                    title: Text(
+                                        controller.categories?[index].name ??
+                                            ''),
+                                    onTap: () {
+                                      print(
+                                          "category send ${controller.categories![index].name}");
+                                      // controller.navigateToCategoryTask(
+                                      //     controller.categories![index], context);
+                                      Navigator.of(context).push(
+                                          MaterialPageRoute(builder: (context) {
+                                        return DesplayCategoryTasks(
+                                            controller.categories![index]);
+                                      }));
+                                      print(
+                                          "category send ${controller.categories![index].id}");
+                                    },
+                                  ),
+                                );
                         },
                         physics: NeverScrollableScrollPhysics(),
                         shrinkWrap: true,
                         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                           crossAxisCount: 2,
-                          // mainAxisSpacing: 27,
-                          // crossAxisSpacing: 27,
-                          // childAspectRatio: 2,
+                          mainAxisSpacing: 10,
+                          crossAxisSpacing: 10,
+                          childAspectRatio: 1.5,
                           // mainAxisExtent: 55,
                         ),
                       ),
@@ -146,20 +174,21 @@ class _CategoryPageState extends State<CategoryPage> {
                       //       // );
                       //     }),
 
-                      Container(
-                        margin: EdgeInsets.all(20),
-                        alignment: Alignment.bottomRight,
-                        child: FloatingActionButton(
-                            onPressed: () {
-                              showDialog(
-                                  context: context,
-                                  builder: (BuildContext context) =>
-                                      CategoryDialog());
-                              setState(() {});
-                            },
-                            backgroundColor: MyColors.purple,
-                            child: Icon(Icons.add)),
-                      ),
+                      //this floating button we use it
+                      // Container(
+                      //   margin: EdgeInsets.all(20),
+                      //   alignment: Alignment.bottomRight,
+                      //   child: FloatingActionButton(
+                      //       onPressed: () {
+                      //         showDialog(
+                      //             context: context,
+                      //             builder: (BuildContext context) =>
+                      //                 CategoryDialog());
+                      //         setState(() {});
+                      //       },
+                      //       backgroundColor: MyColors.purple,
+                      //       child: Icon(Icons.add)),
+                      // ),
                     ],
                   ),
                 );

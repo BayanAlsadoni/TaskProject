@@ -15,17 +15,19 @@ class DesplayTasks extends StatefulWidget {
 class _DesplayTasksState extends State<DesplayTasks> {
   List<Task>? allTasks;
   // Category category;
-  getCategoryTasks() async {
-    allTasks = await DBHelper.dbHelper.getAllTasks();
-    setState(() {});
-  }
+  // getCategoryTasks() async {
+  //   allTasks = await DBHelper.dbHelper.getAllTasks();
+  //   setState(() {});
+  // }
 
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-    getCategoryTasks();
-  }
+  // @override
+  // void initState() {
+  //   // TODO: implement initState
+  //   super.initState();
+  //   getCategoryTasks();
+  // }
+
+  Task? task;
 
   @override
   Widget build(BuildContext context) {
@@ -34,41 +36,49 @@ class _DesplayTasksState extends State<DesplayTasks> {
         //     ? const Center(child: CircularProgressIndicator())
         //     :
         Consumer<MyProvider>(builder: (context, controller, w) {
+      // controller.getAllTasks();
       print(" tasks lingthe${controller.tasks.length}");
+      // print("in tasks${controller.tasks[4]}");
       // setState(() {});
-      return ListView.builder(
-          itemCount: controller.tasks.length,
-          // itemCount: allTasks?.length ?? 0,
-          itemBuilder: (context, index) {
-            // Task task = allTasks![index];
-            return Container(
-              margin: EdgeInsets.all(5),
-              decoration: BoxDecoration(
-                  // color: MyColors.convertColor(catTask.color ?? ""),
-                  color: MyColors.purple4,
-                  borderRadius: BorderRadius.circular(15)),
-              child: Dismissible(
-                key: ValueKey(controller.tasks[index]),
-                // key: ValueKey(task),
-                onDismissed: (direction) {
-                  // DBHelper.dbHelper.deleteTask(task.id ?? 0);
-                  controller.deleteTask(controller.tasks[index].id ?? 0);
-                  setState(() {});
-                },
-                child: ListTile(
-                  title: Text(controller.tasks[index].title ?? ""),
-                  // title: Text(task.title ?? ""),
-                  // subtitle: Text(task.description ?? ""),
-                  // onTap: () {
-                  //   Navigator.of(context)
-                  //       .push(MaterialPageRoute(builder: (context) {
-                  //     return DesplayCategoryTasks(category.id ?? 0);
-                  //   }));
-                  // },
-                ),
-              ),
-            );
-          });
+      return controller.tasks == null
+          ? const Center(child: CircularProgressIndicator())
+          : ListView.builder(
+              itemCount: controller.tasks.length,
+              // itemCount: allTasks?.length ?? 0,
+              itemBuilder: (context, index) {
+                // Task task = allTasks![index];
+                Task task = controller.tasks[index];
+
+                return Container(
+                  margin: EdgeInsets.all(5),
+                  decoration: BoxDecoration(
+                      // color: MyColors.convertColor(catTask.color ?? ""),
+                      color: MyColors.purple4,
+                      borderRadius: BorderRadius.circular(15)),
+                  child: Dismissible(
+                    // key: ValueKey(controller.tasks[index]),
+                    key: ValueKey(task),
+                    // key: ValueKey(task),
+                    onDismissed: (direction) {
+                      // DBHelper.dbHelper.deleteTask(task.id ?? 0);
+                      controller.deleteTask(controller.tasks[index].id ?? 0);
+                      // setState(() {});
+                    },
+                    child: ListTile(
+                      title: Text(controller.tasks[index].title ?? ""),
+                      // title: Text(task.title ?? ""),
+                      // subtitle: Text(task.description ?? ""),
+                      subtitle: Text(controller.tasks[index].description ?? ''),
+                      // onTap: () {
+                      //   Navigator.of(context)
+                      //       .push(MaterialPageRoute(builder: (context) {
+                      //     return DesplayCategoryTasks(category.id ?? 0);
+                      //   }));
+                      // },
+                    ),
+                  ),
+                );
+              });
     });
   }
 }

@@ -191,13 +191,15 @@ class _AddTaskState extends State<AddTask> {
                     onPressed: () async {
                       // String title = titleEditingController.text;
                       // String description = descriptionEditingController.text;
-                      String title = provider.taskTitleController.text;
-                      String description =
-                          provider.taskDescriptionController.text;
+                      // String title = provider.taskTitleController.text;
+                      // String description =
+                      //     provider.taskDescriptionController.text;
                       // String t = provider.time;
                       // String d = provider.date;
                       provider.catId = widget.catId;
                       await provider.insertNewTask();
+                      // await provider.getAllTasks();
+
                       // DBHelper.dbHelper.insertTask();
                       print(
                           "all tasks ${provider.getAllTasks()} ${widget.catId}");

@@ -77,6 +77,7 @@ class DBHelper {
 
   Future<List<Task>> getAllTasks() async {
     List<Map> result = await databas.query(task);
+    print("in db task ${result.length}");
     return result.map((e) => Task.fromMap(e)).toList();
   }
 
