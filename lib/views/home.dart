@@ -22,6 +22,7 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       drawer: DrawerHome(),
       appBar: AppBar(
+        backgroundColor: MyColors.purple,
         title: Text("home"),
       ),
       body: PageView(
@@ -37,6 +38,7 @@ class _HomePageState extends State<HomePage> {
         ],
       ),
       bottomNavigationBar: BottomNavigationBar(
+          selectedItemColor: MyColors.purple,
           currentIndex: index,
           onTap: (value) {
             index = value;

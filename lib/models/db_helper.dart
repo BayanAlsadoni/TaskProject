@@ -9,6 +9,7 @@ class DBHelper {
   DBHelper._();
   String category = "Category";
   String task = "Task";
+  String register = "Register";
   static DBHelper dbHelper = DBHelper._();
   late Database databas;
   initDB() async {
@@ -17,24 +18,29 @@ class DBHelper {
     databas = await openDatabase(
       path,
       version: 1,
-      onCreate: (db, version) {
+      onCreate: (db, version) async {
         db.execute(
             'CREATE TABLE $category (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, color TEXT)');
         db.execute(
             'CREATE TABLE $task (id INTEGER PRIMARY KEY AUTOINCREMENT, title TEXT,description TEXT, time TEXT, date TEXT, catId INTEGER references Category(id) )');
 
+        // await db.execute(
         db.execute(
-            'CREATE TABLE Register (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT,email TEXT, password TEXT');
+            'CREATE TABLE $register (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT,email VARCHAR(20), password TEXT');
       },
     );
   }
 
   insertUse(User user) async {
-    await databas.insert("Register", user.toMap());
+    // await databas.rawInsert(
+    //     'INSERT INTO Register(name, email, password) VALUES("${user.name}", "${user.email}","${user.password}")');
+    await databas.insert(register, user.toMap());
+    // await databas.insert("Register", user.toMap());
+    print("in insert user db ");
   }
 
   Future<List<User>> getAllUsers() async {
-    List<Map> result = await databas.query("Register");
+    List<Map> result = await databas.query(register);
     return result.map((e) => User.fromMap(e)).toList();
   }
 
@@ -90,7 +96,14 @@ class DBHelper {
     databas.delete(task, where: "id = $id");
   }
 
+  deleteTaskByCategory(int catId) async {
+    databas.delete(task, where: "catId = $catId");
+  }
+
   updateTask(Task newTask) async {
-    databas.update(category, newTask.toMap(), where: 'id = ${newTask.id}');
+    databas
+        .update(task, newTask.toMap(), where: 'id=?', whereArgs: [newTask.id]);
+
+    print("in db update task ${newTask.id}");
   }
 }

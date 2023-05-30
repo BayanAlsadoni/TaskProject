@@ -24,7 +24,7 @@ void main() async {
   // runApp(const MainApp());
   runApp(ChangeNotifierProvider<MyProvider>(
     create: (context) => MyProvider(),
-    child: MaterialApp(home: HomePage()),
+    child: MaterialApp(home: Splash()),
 
     // Scaffold(
     //   body: Splash(),

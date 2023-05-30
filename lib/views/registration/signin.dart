@@ -63,30 +63,39 @@ class Login extends StatelessWidget {
                 ),
                 // MyButtonStyle("Login", HomePage()),
 
-                TextButton(
-                    style: TextButton.styleFrom(
+                Container(
+                  decoration: BoxDecoration(
+                      color: MyColors.purple,
+                      borderRadius: BorderRadius.circular(10)),
+                  child: TextButton(
+                      // style: TextButton.styleFrom(
+                      // textStyle: TextStyle(color: Colors.white),
                       // backgroundColor: MyColors.broun,
-                      fixedSize: Size(double.infinity, double.infinity),
+                      // fixedSize: Size(double.infinity, double.infinity),
                       // alignment: Alignment.bottomCenter
-                    ),
-                    onPressed: () {
-                      List<User> users = provider.getUsers();
-                      for (User user in users) {
-                        if (provider.userEmail == user.email) {
-                          if (provider.userPassword == user.password) {
-                            Navigator.of(context)
-                                .push(MaterialPageRoute(builder: (context) {
-                              return HomePage();
-                            }));
+                      // ),
+                      onPressed: () {
+                        print("in btn");
+                        List<User> users = provider.users;
+                        print("in btn $users");
+                        for (User user in users) {
+                          print("in login ${user.email}");
+                          if (provider.userEmail == user.email) {
+                            if (provider.userPassword == user.password) {
+                              Navigator.of(context)
+                                  .push(MaterialPageRoute(builder: (context) {
+                                return HomePage();
+                              }));
+                            }
                           }
                         }
-                      }
-                    },
-                    child: Text(
-                      "Register Now",
-                      style: TextStyle(fontSize: 11),
-                      // textAlign: TextAlign.start,
-                    )),
+                      },
+                      child: Text(
+                        "Register Now",
+                        style: TextStyle(fontSize: 15, color: Colors.white),
+                        // textAlign: TextAlign.start,
+                      )),
+                ),
 
                 SizedBox(
                   width: double.infinity,

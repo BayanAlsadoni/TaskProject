@@ -28,22 +28,23 @@ class MyColors {
   static Color convertColor(String colorString) {
     switch (colorString) {
       case "blue":
-        return Colors.blue;
+        // return Color.fromARGB(255, 184, 222, 255);
+        return Color.fromARGB(255, 136, 199, 255);
 
-      case "red":
-        return Colors.redAccent;
+      case "pink":
+        return Color.fromARGB(255, 255, 184, 230);
 
       case "green":
-        return Colors.greenAccent;
+        return Color.fromARGB(255, 157, 219, 173);
 
       case "orange":
-        return Colors.orange;
+        return Color.fromARGB(255, 250, 187, 92);
 
-      case "brown":
-        return Colors.brown;
+      case "purple":
+        return MyColors.purple2;
 
       case "yellow":
-        return Colors.yellowAccent;
+        return Color.fromARGB(255, 250, 250, 126);
       default:
         return MyColors.blue_purple;
     }

@@ -9,11 +9,14 @@ import 'package:flutter/material.dart';
 import '../data/user.dart';
 
 class MyProvider extends ChangeNotifier {
-  MyProvider() {
+  Category? ca;
+  MyProvider({ca}) {
     getAllCategories();
     getAllTasks();
     getUsers();
-    // getCategoryTasks();
+    if (ca != null) {
+      getCategoryTasks(ca);
+    }
   }
 
   List<Category> categories = [];
@@ -52,10 +55,11 @@ class MyProvider extends ChangeNotifier {
         email: userEmail.text,
         password: userPassword.text);
     int newId = await DBHelper.dbHelper.insertUse(user);
-    user.id = newId;
-    users.add(user);
-    notifyListeners();
-    // getAllCategories();
+    // user.id = newId;
+    // users.add(user);
+    // notifyListeners();
+    print("in insert user pr $user");
+    getUsers();
   }
 
   flipIsLoading() {
@@ -73,6 +77,8 @@ class MyProvider extends ChangeNotifier {
   TextEditingController catNameController = TextEditingController();
   String catColorName = "";
   int categoryId = 0;
+
+  late Task t;
 
   changeCatColor(String catColor) {
     catColorName = catColor;
@@ -94,6 +100,14 @@ class MyProvider extends ChangeNotifier {
   deleteCategory(int id) async {
     await DBHelper.dbHelper.deleteCategory(id);
     categories.removeWhere((element) => element.id == id);
+    deleteCategoryTasks(id);
+    notifyListeners();
+  }
+
+  deleteCategoryTasks(int cid) async {
+    await DBHelper.dbHelper.deleteTaskByCategory(cid);
+    categories.removeWhere((element) => element.id == cid);
+    tasks.removeWhere((element) => element.catId == cid);
     notifyListeners();
   }
 
@@ -115,8 +129,10 @@ class MyProvider extends ChangeNotifier {
     //   }
     // }
     categoryTasks = await DBHelper.dbHelper.getTaskByCategoryId(cat.id ?? 0);
-    // flipIsLoading();
     notifyListeners();
+
+    // return categoryTasks;
+    // flipIsLoading();
   }
 
   getAllTasks() async {
@@ -148,6 +164,7 @@ class MyProvider extends ChangeNotifier {
   }
 
   navigateToEditTask(Task task, BuildContext context) {
+    this.t = task;
     taskTitleController.text = task.title ?? '';
     taskDescriptionController.text = task.description ?? '';
     time = task.time ?? '';
@@ -163,8 +180,9 @@ class MyProvider extends ChangeNotifier {
   }
 
   updateTask() async {
+    print("task id in update ${t.id}");
     Task task = Task(
-        id: id,
+        id: t.id,
         title: taskTitleController.text,
         description: taskDescriptionController.text,
         time: time,

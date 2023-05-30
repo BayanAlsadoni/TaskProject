@@ -26,7 +26,7 @@ class MyTextFieldStyle extends StatelessWidget {
         // textAlign: ,
         // strutStyle: ,
         // style: TextStyle(backgroundColor: MyColors.broun),
-        maxLength: 5,
+        // maxLength: 5,
         // minLines: 1,
         // maxLines: 6,
         keyboardType: TextInputType.multiline,

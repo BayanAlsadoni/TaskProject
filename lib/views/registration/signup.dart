@@ -1,9 +1,12 @@
+import 'package:final_project/models/db_helper.dart';
 import 'package:final_project/views/home.dart';
+import 'package:final_project/views/registration/signin.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../data/my_colors.dart';
+import '../../data/user.dart';
 import '../../models/provider.dart';
 import '../../widgets/button_style.dart';
 import '../../widgets/text_field_style.dart';
@@ -24,7 +27,7 @@ class _RegisterState extends State<Register> {
             padding: EdgeInsets.fromLTRB(30, 50, 30, 0),
             margin: EdgeInsets.all(10),
             child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 // Image.asset(
@@ -42,10 +45,16 @@ class _RegisterState extends State<Register> {
                 MyTextFieldStyle(
                     textEditingController: provider.userName,
                     hintText: "Enter your name"),
+                SizedBox(
+                  height: 10,
+                ),
                 // Text("Enter your email"),
                 MyTextFieldStyle(
                   textEditingController: provider.userEmail,
                   hintText: "Enter your email",
+                ),
+                SizedBox(
+                  height: 10,
                 ),
                 // Text("Enter your phone"),
                 // MyTextFieldStyle(
@@ -56,10 +65,23 @@ class _RegisterState extends State<Register> {
                   textEditingController: provider.userPassword,
                   hintText: "Enter your password",
                 ),
+                SizedBox(
+                  height: 60,
+                ),
                 // MyButtonStyle("Register", HomePage()),
                 ElevatedButton(
+                    style: ButtonStyle(
+                        padding: MaterialStateProperty.all(EdgeInsets.all(10)),
+                        backgroundColor: MaterialStateColor.resolveWith(
+                            (states) => MyColors.purple)),
                     onPressed: () {
-                      provider.insertNewUser();
+                      // await provider.insertNewUser();
+                      DBHelper.dbHelper.insertUse(User(
+                          name: provider.userName.text,
+                          email: provider.userEmail.text,
+                          password: provider.userPassword.text));
+                      print("in signup ${provider.users}");
+                      print("in signup email ${provider.userEmail.text}");
                       Navigator.of(context)
                           .push(MaterialPageRoute(builder: (context) {
                         return HomePage();
@@ -69,7 +91,17 @@ class _RegisterState extends State<Register> {
                 Row(
                   children: [
                     Text("you already have an account?"),
-                    TextButton(onPressed: () {}, child: Text("Login Now"))
+                    TextButton(
+                        onPressed: () {
+                          Navigator.of(context)
+                              .push(MaterialPageRoute(builder: (context) {
+                            return Login();
+                          }));
+                        },
+                        child: Text(
+                          "Login Now",
+                          style: TextStyle(color: MyColors.purple),
+                        ))
                   ],
                 )
               ],

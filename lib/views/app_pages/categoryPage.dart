@@ -20,38 +20,48 @@ class CategoryPage extends StatefulWidget {
 
 class _CategoryPageState extends State<CategoryPage> {
   //  DBHelper.dbHelper.insertCategory(catName, color);
+  int i = 0;
   @override
   Widget build(BuildContext context) {
     return Consumer<MyProvider>(builder: (context, controller, w) {
+      i = controller.categories.length - 1;
       return controller.isLoading
           ? const Center(
               child: CircularProgressIndicator(),
             )
           : controller.categories.isEmpty
-              ? Column(
-                  children: [
-                    Expanded(
-                      child: Center(
-                        child: Image.asset("assets/images/boy_in_labtop.png",
-                            // child: Image.asset("assets/images/books_cat.png",
-                            alignment: Alignment.center),
+              ? Container(
+                  // color: Colors.black26,
+                  child: Column(
+                    children: [
+                      Expanded(
+                        child: Container(
+                          child: Image.asset(
+                            "assets/images/girlandbooks.png",
+                            // child: Image.asset("assets/images/girlandbooks.png",
+                            alignment: Alignment.center,
+                          ),
+                        ),
                       ),
-                    ),
-                    Text("There is no categories yet🥀"),
-                    Container(
-                      margin: EdgeInsets.all(20),
-                      alignment: Alignment.bottomRight,
-                      child: FloatingActionButton(
-                          onPressed: () {
-                            showDialog(
-                                context: context,
-                                builder: (BuildContext context) =>
-                                    CategoryDialog());
-                          },
-                          backgroundColor: MyColors.purple,
-                          child: Icon(Icons.add)),
-                    ),
-                  ],
+                      Text("There is no categories yet🥀"),
+                      Container(
+                        margin: EdgeInsets.all(20),
+                        alignment: Alignment.bottomRight,
+                        child: FloatingActionButton(
+                            onPressed: () {
+                              showDialog(
+                                  context: context,
+                                  builder: (BuildContext context) =>
+                                      CategoryDialog());
+                            },
+                            backgroundColor: MyColors.purple,
+                            child: Icon(
+                              Icons.add,
+                              // color: Colors.black,
+                            )),
+                      ),
+                    ],
+                  ),
                 )
               : SingleChildScrollView(
                   child: Column(
@@ -59,11 +69,12 @@ class _CategoryPageState extends State<CategoryPage> {
                     children: [
                       GridView.builder(
                         padding: EdgeInsets.all(10),
-                        itemCount: controller.categories?.length,
+                        // itemCount: i,
+                        itemCount: controller.categories.length + 1,
                         itemBuilder: (context, index) {
-                          //
-
-                          return index == 0
+                          index = index - 1;
+                          print("index$index");
+                          return index == -1
                               ? Container(
                                   // alignment: Alignment.bottomLeft,
                                   // margin: EdgeInsets.fromLTRB(10, 5, 5, 0),
@@ -83,7 +94,7 @@ class _CategoryPageState extends State<CategoryPage> {
                                             context: context,
                                             builder: (BuildContext context) =>
                                                 CategoryDialog());
-                                        setState(() {});
+                                        // setState(() {});
                                       }),
                                 )
                               : Container(
@@ -95,6 +106,17 @@ class _CategoryPageState extends State<CategoryPage> {
                                       // color: MyColors.blue_purple,
                                       borderRadius: BorderRadius.circular(10)),
                                   child: ListTile(
+                                    trailing: IconButton(
+                                      alignment: Alignment.bottomRight,
+                                      // padding:
+                                      //     EdgeInsets.fromLTRB(30, 70, 0, 0),
+                                      icon: Icon(Icons.delete, size: 20),
+                                      onPressed: () {
+                                        controller.deleteCategory(
+                                            controller.categories![index].id ??
+                                                0);
+                                      },
+                                    ),
                                     title: Text(
                                         controller.categories?[index].name ??
                                             ''),

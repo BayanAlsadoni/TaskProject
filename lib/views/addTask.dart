@@ -11,7 +11,8 @@ import '../widgets/text_field_style.dart';
 class AddTask extends StatefulWidget {
   int catId;
   bool isNewTask;
-  AddTask(this.catId, {this.isNewTask = true});
+  Function? fun;
+  AddTask(this.catId, {this.isNewTask = true, this.fun});
   @override
   State<AddTask> createState() => _AddTaskState();
 }
@@ -197,7 +198,21 @@ class _AddTaskState extends State<AddTask> {
                       // String t = provider.time;
                       // String d = provider.date;
                       provider.catId = widget.catId;
-                      await provider.insertNewTask();
+                      if (widget.isNewTask) {
+                        await provider.insertNewTask();
+                        widget.fun!();
+                        Navigator.of(context).pop();
+                        provider.taskTitleController.clear();
+                        provider.taskDescriptionController.clear();
+                      } else {
+                        print("in update");
+                        provider.updateTask();
+                        print("in update${provider.t.title}");
+                        Navigator.of(context).pop();
+                        provider.taskTitleController.clear();
+                        provider.taskDescriptionController.clear();
+                      }
+
                       // await provider.getAllTasks();
 
                       // DBHelper.dbHelper.insertTask();

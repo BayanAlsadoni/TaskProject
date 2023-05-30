@@ -46,103 +46,122 @@ class _CategoryDialogState extends State<CategoryDialog> {
                 children: [
                   Container(
                     margin: EdgeInsets.fromLTRB(10, 0, 10, 0),
-                    child: Row(children: [
-                      Radio(
-                          fillColor: MaterialStateColor.resolveWith(
-                              (states) => MyColors.purple2),
-                          value: "yellow",
-                          groupValue: color,
-                          onChanged: (v) {
-                            color = v ?? '';
-                            provider.changeCatColor(color);
-                            print("$color");
-                          }),
-                      Text('yellow'),
-                      Radio(
-                          fillColor: MaterialStateColor.resolveWith(
-                              (states) => MyColors.purple2),
-                          value: "brown",
-                          groupValue: color,
-                          onChanged: (v) {
-                            color = v ?? '';
-                            provider.changeCatColor(color);
-                            print("$color");
-                          }),
-                      Text('brown'),
+                    child: Expanded(
+                      child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Radio(
+                                fillColor: MaterialStateColor.resolveWith(
+                                    (states) =>
+                                        MyColors.convertColor("yellow")),
+                                value: "yellow",
+                                groupValue: color,
+                                onChanged: (v) {
+                                  color = v ?? '';
+                                  provider.changeCatColor(color);
+                                  print("$color");
+                                }),
 
-                      // RadioDialog(
-                      //     value: "yellow",
-                      //     groupValue: color,
-                      //     colorName: "yellow",
-                      //     colorDegree: Colors.amber),
-                      // RadioDialog(
-                      //     value: "brown",
-                      //     groupValue: color,
-                      //     colorName: "brown",
-                      //     colorDegree: Colors.brown),
-                    ]),
+                            SizedBox(width: 50, child: Text('yellow')),
+                            Radio(
+                                fillColor: MaterialStateColor.resolveWith(
+                                    (states) =>
+                                        MyColors.convertColor("purple")),
+                                value: "purple",
+                                groupValue: color,
+                                onChanged: (v) {
+                                  color = v ?? '';
+                                  provider.changeCatColor(color);
+                                  print("$color");
+                                }),
+                            SizedBox(width: 50, child: Text('purple')),
+
+                            // RadioDialog(
+                            //     value: "yellow",
+                            //     groupValue: color,
+                            //     colorName: "yellow",
+                            //     colorDegree: Colors.amber),
+                            // RadioDialog(
+                            //     value: "brown",
+                            //     groupValue: color,
+                            //     colorName: "brown",
+                            //     colorDegree: Colors.brown),
+                          ]),
+                    ),
                   ),
                   Container(
                     margin: EdgeInsets.fromLTRB(10, 0, 10, 0),
-                    child: Row(children: [
-                      Radio(
-                          fillColor: MaterialStateColor.resolveWith(
-                              (states) => MyColors.purple2),
-                          value: "red",
-                          groupValue: color,
-                          onChanged: (v) {
-                            color = v ?? '';
-                            provider.changeCatColor(color);
-                            print("$color");
-                          }),
-                      Text('red'),
-                      Radio(
-                          fillColor: MaterialStateColor.resolveWith(
-                              (states) => MyColors.purple2),
-                          value: "orange",
-                          groupValue: color,
-                          onChanged: (v) {
-                            color = v ?? '';
-                            provider.changeCatColor(color);
-                            print("$color");
-                          }),
-                      Text('orange'),
+                    child: Expanded(
+                      child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Radio(
+                                fillColor: MaterialStateColor.resolveWith(
+                                    (states) => MyColors.convertColor("pink")),
+                                value: "pink",
+                                groupValue: color,
+                                onChanged: (v) {
+                                  color = v ?? '';
+                                  provider.changeCatColor(color);
+                                  print("$color");
+                                }),
+                            SizedBox(
+                              width: 50,
+                              child: Text(
+                                'pink',
+                              ),
+                            ),
+                            Radio(
+                                fillColor: MaterialStateColor.resolveWith(
+                                    (states) =>
+                                        MyColors.convertColor("orange")),
+                                value: "orange",
+                                groupValue: color,
+                                onChanged: (v) {
+                                  color = v ?? '';
+                                  provider.changeCatColor(color);
+                                  print("$color");
+                                }),
+                            SizedBox(width: 50, child: Text('orange')),
 
-                      // RadioDialog(value: "red", groupValue: color),
-                      // // RadioDialog("red", color, "red", Colors.red),
-                      // RadioDialog(value: "orange", groupValue: color),
-                      // RadioDialog("orange", color, "orange", Colors.orange),
-                    ]),
+                            // RadioDialog(value: "red", groupValue: color),
+                            // // RadioDialog("red", color, "red", Colors.red),
+                            // RadioDialog(value: "orange", groupValue: color),
+                            // RadioDialog("orange", color, "orange", Colors.orange),
+                          ]),
+                    ),
                   ),
                   Container(
                     margin: EdgeInsets.fromLTRB(10, 0, 10, 0),
-                    child: Row(children: [
-                      Radio(
-                          fillColor: MaterialStateColor.resolveWith(
-                              (states) => MyColors.purple2),
-                          value: "green",
-                          groupValue: color,
-                          onChanged: (v) {
-                            color = v ?? '';
-                            provider.changeCatColor(color);
-                            print("$color");
-                          }),
-                      Text('green'),
-                      Radio(
-                          fillColor: MaterialStateColor.resolveWith(
-                              (states) => MyColors.purple2),
-                          value: "blue",
-                          groupValue: color,
-                          onChanged: (v) {
-                            color = v ?? '';
-                            provider.changeCatColor(color);
-                            print("$color");
-                          }),
-                      Text('blue'),
+                    child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Radio(
+                              fillColor: MaterialStateColor.resolveWith(
+                                  (states) => MyColors.convertColor("green")),
+                              value: "green",
+                              groupValue: color,
+                              onChanged: (v) {
+                                color = v ?? '';
+                                provider.changeCatColor(color);
+                                print("$color");
+                              }),
+                          SizedBox(width: 50, child: Text('green')),
+                          Radio(
+                              fillColor: MaterialStateColor.resolveWith(
+                                  (states) => MyColors.convertColor("blue")),
+                              value: "blue",
+                              groupValue: color,
+                              onChanged: (v) {
+                                color = v ?? '';
+                                provider.changeCatColor(color);
+                                print("$color");
+                              }),
+                          SizedBox(width: 50, child: Text('blue')),
 
-                      // RadioDialog("green", color, "green", Colors.green),
-                      // RadioDialog("blue", color, "blue", Colors.blue),
-                    ]),
+                          // RadioDialog("green", color, "green", Colors.green),
+                          // RadioDialog("blue", color, "blue", Colors.blue),
+                        ]),
                   ),
                 ],
               ),
@@ -150,14 +169,15 @@ class _CategoryDialogState extends State<CategoryDialog> {
               TextButton(
                   onPressed: () async {
                     await provider.insertNewCategory(context);
-                    setState(() {});
+                    // setState(() {});
+                    provider.catNameController.clear();
 
                     // String catName = controller.text;
                     // // ColorName.convertColor(color); // importany
                     // Category c = Category(name: catName, color: color);
                     // DBHelper.dbHelper.insertCategory(c);
                     Navigator.of(context).pop();
-                    setState(() {});
+                    // setState(() {});
                   },
                   child: Text(
                     'Got It!',

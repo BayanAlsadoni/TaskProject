@@ -1,3 +1,4 @@
+import 'package:final_project/views/addTask.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -42,43 +43,83 @@ class _DesplayTasksState extends State<DesplayTasks> {
       // setState(() {});
       return controller.tasks == null
           ? const Center(child: CircularProgressIndicator())
-          : ListView.builder(
-              itemCount: controller.tasks.length,
-              // itemCount: allTasks?.length ?? 0,
-              itemBuilder: (context, index) {
-                // Task task = allTasks![index];
-                Task task = controller.tasks[index];
-
-                return Container(
-                  margin: EdgeInsets.all(5),
-                  decoration: BoxDecoration(
-                      // color: MyColors.convertColor(catTask.color ?? ""),
-                      color: MyColors.purple4,
-                      borderRadius: BorderRadius.circular(15)),
-                  child: Dismissible(
-                    // key: ValueKey(controller.tasks[index]),
-                    key: ValueKey(task),
-                    // key: ValueKey(task),
-                    onDismissed: (direction) {
-                      // DBHelper.dbHelper.deleteTask(task.id ?? 0);
-                      controller.deleteTask(controller.tasks[index].id ?? 0);
-                      // setState(() {});
-                    },
-                    child: ListTile(
-                      title: Text(controller.tasks[index].title ?? ""),
-                      // title: Text(task.title ?? ""),
-                      // subtitle: Text(task.description ?? ""),
-                      subtitle: Text(controller.tasks[index].description ?? ''),
-                      // onTap: () {
-                      //   Navigator.of(context)
-                      //       .push(MaterialPageRoute(builder: (context) {
-                      //     return DesplayCategoryTasks(category.id ?? 0);
-                      //   }));
-                      // },
-                    ),
+          : controller.categories.isEmpty
+              ? Container(
+                  // color: Colors.black26,
+                  child: Column(
+                    children: [
+                      Expanded(
+                        child: Container(
+                          color: Colors.white,
+                          child: Image.asset(
+                            "assets/images/task.png",
+                            // child: Image.asset("assets/images/books_cat.png",
+                            alignment: Alignment.centerRight, height: 200,
+                          ),
+                        ),
+                      ),
+                      Text("There is no tasks yet🥀"),
+                    ],
                   ),
-                );
-              });
+                )
+              : ListView.builder(
+                  itemCount: controller.tasks.length,
+                  // itemCount: allTasks?.length ?? 0,
+                  itemBuilder: (context, index) {
+                    // Task task = allTasks![index];
+                    Task task = controller.tasks[index];
+
+                    return Container(
+                      margin: EdgeInsets.all(5),
+                      decoration: BoxDecoration(
+                          // color: MyColors.convertColor(catTask.color ?? ""),
+                          color: Colors.black12,
+                          // color: MyColors.purple4,
+                          borderRadius: BorderRadius.circular(15)),
+                      child: Dismissible(
+                        // key: ValueKey(controller.tasks[index]),
+                        key: ValueKey(task),
+                        // key: ValueKey(task),
+                        onDismissed: (direction) {
+                          // DBHelper.dbHelper.deleteTask(task.id ?? 0);
+                          controller
+                              .deleteTask(controller.tasks[index].id ?? 0);
+                          // setState(() {});
+                        },
+                        child: ListTile(
+                          title: Text(controller.tasks[index].title ?? ""),
+                          // title: Text(task.title ?? ""),
+                          // subtitle: Text(task.description ?? ""),
+                          subtitle:
+                              Text(controller.tasks[index].description ?? ''),
+                          trailing: Column(
+                              mainAxisAlignment: MainAxisAlignment.spaceAround,
+                              children: [
+                                Text(
+                                  controller.tasks[index]!.time ?? "",
+                                  style: TextStyle(
+                                      fontSize: 12, color: Colors.black45),
+                                ),
+                                Text(controller.tasks[index].date ?? "",
+                                    style: TextStyle(
+                                        fontSize: 12, color: Colors.black45))
+                              ]),
+
+                          onTap: () {
+                            controller.navigateToEditTask(
+                                controller.tasks[index], context);
+                            // Navigator.of(context)
+                            //     .push(MaterialPageRoute(builder: (context) {
+                            //   return AddTask(
+                            //     controller.tasks[index].catId ?? 0,
+                            //     isNewTask: false,
+                            //   );
+                            // }));
+                          },
+                        ),
+                      ),
+                    );
+                  });
     });
   }
 }
